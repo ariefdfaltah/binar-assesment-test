@@ -1,1 +1,1 @@
-Repositori berikut digunakan dalam rangka mengikuti Binar Career Hub dan masuk pada tahap Assesment Test.
+Repository berikut digunakan dalam rangka mengikuti Binar Career Hub dan masuk pada tahap Assesment Test. Aplikasi sederhana pada Online Assesment Test ini akan di host pada alamat http://binar-assesment.altto.space. alamat tersebut hanya diperuntukan untuk melihat demi dari aplikasi sederhana yang dikerjakan. Terimakasih.

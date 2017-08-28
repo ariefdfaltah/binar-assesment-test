@@ -4,9 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var drivers = require('./routes/drivers');
 
 var app = express();
 
@@ -22,8 +24,31 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set('mamboSecret', 'ayamGor3ngH4l4l');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/ojek-assesment-test');
+
+
 app.use('/', index);
-app.use('/users', users);
+app.use(function(req, res, next) {
+    var token = req.body.access || req.query.access || req.headers['x-access-access'];
+    if (token) {
+
+        jwt.verify(token, app.get('mamboSecret'), function(err, decoded) {
+            if (err) {
+                res.status(404)
+                    .send('Not found')
+            } else {
+                req.decoded = decoded;
+                next();
+            }
+        });
+    } else {
+        res.status(404)
+            .send('Not found')
+    }
+});
+app.use('/drivers', drivers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
